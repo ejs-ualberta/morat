@@ -60,7 +60,6 @@ GTPResponse GTP::gtp_clearboard(vecstr args){
 
 GTPResponse GTP::gtp_undo(vecstr args){
 	int num = (args.size() >= 1 ? from_str<int>(args[0]) : 1);
-	
 	while(num--){
 		hist.undo();
 	}
@@ -316,10 +315,10 @@ GTPResponse GTP::gtp_load_sgf(vecstr args){
 
 GTPResponse GTP::toggle_to_play(vecstr args){
         if (args.size() != 0){
-	  return GTPResponse(false, "Wrong number of arguments");
+                return GTPResponse(false, "Wrong number of arguments");
         }
-	hist.toggle_to_play();
-	return GTPResponse(true);
+        hist.toggle_to_play();
+        return GTPResponse(true);
 }
 
 }; // namespace Y

@@ -57,7 +57,6 @@ mutable uint16_t parent;  //parent for this group of cells
 
 		std::string to_s(int i) const;
 	};
-        Side first_move = Side::NONE;
 
 private:
 	int8_t size_;  // the length of one side of the board
@@ -67,6 +66,7 @@ private:
 	short num_moves_;
 	Move last_move_ = M_NONE;
         Side to_play_ = Side::NONE;
+        Side first_move = Side::NONE;
 	Outcome outcome_;
 
 	std::vector<Cell> cells_;
@@ -97,10 +97,8 @@ public:
 		if (to_play_ == Side::NONE){
 		        to_play_ = Side::P1;
 			first_move = Side::P1;
-		}else if(first_move == Side::P1){
-		        to_play_ = Side::P1;
-		}else if(first_move == Side::P2){
-		        to_play_ = Side::P2;
+		}else {
+		        to_play_ = first_move;
 		}
 		outcome_ = Outcome::UNKNOWN;
 		hash.clear();

@@ -1,4 +1,4 @@
-#include <iostream>
+
 #pragma once
 
 #include <vector>
@@ -45,7 +45,7 @@ public:
 	}
 
         void toggle_to_play(){
-	  board.toggle_to_play();
+	        board.toggle_to_play();
         }
 
 	bool undo() {
