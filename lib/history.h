@@ -1,4 +1,4 @@
-
+#include <iostream>
 #pragma once
 
 #include <vector>
@@ -43,6 +43,10 @@ public:
 		hist.clear();
 		board.clear();
 	}
+
+        void toggle_to_play(){
+	  board.toggle_to_play();
+        }
 
 	bool undo() {
 		if(hist.size() <= 0)

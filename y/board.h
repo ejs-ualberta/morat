@@ -29,7 +29,7 @@ public:
 
 	static constexpr const char * name = "y";
 	static constexpr const char * default_size = "10";
-	static const int min_size = 5;
+	static const int min_size = 4;
 	static const int max_size = 25;
 	static const int max_vec_size = max_size * max_size;
 
@@ -57,6 +57,7 @@ mutable uint16_t parent;  //parent for this group of cells
 
 		std::string to_s(int i) const;
 	};
+        Side first_move = Side::NONE;
 
 private:
 	int8_t size_;  // the length of one side of the board
@@ -64,8 +65,8 @@ private:
 
 	short num_cells_;
 	short num_moves_;
-	Move last_move_;
-	Side to_play_;
+	Move last_move_ = M_NONE;
+        Side to_play_ = Side::NONE;
 	Outcome outcome_;
 
 	std::vector<Cell> cells_;
@@ -93,7 +94,14 @@ public:
 	void clear() {
 		last_move_ = M_NONE;
 		num_moves_ = 0;
-		to_play_ = Side::P1;
+		if (to_play_ == Side::NONE){
+		        to_play_ = Side::P1;
+			first_move = Side::P1;
+		}else if(first_move == Side::P1){
+		        to_play_ = Side::P1;
+		}else if(first_move == Side::P2){
+		        to_play_ = Side::P2;
+		}
 		outcome_ = Outcome::UNKNOWN;
 		hash.clear();
 
@@ -104,6 +112,25 @@ public:
 				cells_[pos.xy] = Cell(s, pos.xy, 1, edges(x, y), init_pattern(pos));
 			}
 		}
+	}
+
+        void toggle_to_play(){
+	        if (last_move_ == M_NONE){
+		        if (first_move == Side::P2){
+			        first_move = Side::P1;
+			        to_play_ = Side::P1;
+			}else if (first_move == Side::P1){
+			        first_move = Side::P2;
+			        to_play_ = Side::P2;
+			}
+			return;
+	        }
+		// Need to modify history if doing this
+	        // if (to_play_ == Side::P2){
+		// 	to_play_ = Side::P1;
+	        // }else if (to_play_ == Side::P1){
+		// 	to_play_ = Side::P2;
+		// }
 	}
 
 	std::string size() const {
@@ -170,7 +197,7 @@ public:
 	int8_t win_type() const { return 0; }
 
 	Side to_play() const {
-		return to_play_;
+	        return to_play_;
 	}
 
 	Cell test_cell(const Move & pos) const {
