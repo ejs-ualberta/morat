@@ -321,5 +321,38 @@ GTPResponse GTP::toggle_to_play(vecstr args){
         return GTPResponse(true);
 }
 
+
+GTPResponse GTP::solve_all(vecstr args){
+        if (args.size() > 1){
+	        return GTPResponse(false, "Wrong number of arguments");
+	}
+
+	double use_time = (args.size() >= 1 ? from_str<double>(args[0]) : 0);
+	if (use_time == 0)
+		use_time = time_control.get_time(hist.len(), hist->moves_remain(), agent->gamelen());
+
+	auto tp = hist->to_play();
+	std::string winning_moves = "";
+	for (auto move : *hist){
+                logerr("\n" + move.to_s() + "\n");
+                play(move.to_s(), tp);
+                //logerr(gtp_print(args).response);
+
+		Time start;
+		agent->search(use_time, time_control.max_sims, verbose);
+		time_control.use(Time() - start);
+
+                if ((tp == Side::P1 && agent->root_outcome == Outcome::P1) || (tp == Side::P2 && agent->root_outcome == Outcome::P2)){
+                        //logerr("Winning move " + move.to_s() + "\n");
+                        winning_moves += move.to_s() + " ";
+		}
+		
+		hist.undo();
+                set_board(false);
+	}
+
+	return GTPResponse(true, winning_moves);
+}
+
 }; // namespace Y
 }; // namespace Morat

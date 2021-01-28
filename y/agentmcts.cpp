@@ -48,8 +48,10 @@ bool AgentMCTS::Node::from_s(std::string s) {
 void AgentMCTS::search(double time, uint64_t max_runs, int verbose){
 	Side to_play = rootboard.to_play();
 
-	if(rootboard.outcome() >= Outcome::DRAW || (time <= 0 && max_runs == 0))
+	if(rootboard.outcome() >= Outcome::DRAW || (time <= 0 && max_runs == 0)){
+                root_outcome = rootboard.outcome();
 		return;
+	}
 
 	Time starttime;
 
@@ -124,8 +126,10 @@ void AgentMCTS::search(double time, uint64_t max_runs, int verbose){
 			}
 		}
 
-		if(root.outcome != Outcome::UNKNOWN)
+                root_outcome = root.outcome;
+		if(root.outcome != Outcome::UNKNOWN){
 			logerr("Solved as a " + root.outcome.to_s_rel(to_play) + "\n");
+		}
 
 		std::string pvstr;
 		for(const auto& m : Agent::get_pv())
