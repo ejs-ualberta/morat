@@ -29,7 +29,7 @@ public:
 
 	static constexpr const char * name = "y";
 	static constexpr const char * default_size = "10";
-	static const int min_size = 1;
+	static const int min_size = 2;
 	static const int max_size = 25;
 	static const int max_vec_size = max_size * max_size;
 
