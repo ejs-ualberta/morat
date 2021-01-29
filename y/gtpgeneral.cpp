@@ -334,7 +334,7 @@ GTPResponse GTP::solve_all(vecstr args){
 	auto tp = hist->to_play();
 	std::string winning_moves = "";
 	for (auto move : *hist){
-                if (verbose >= 1){logerr("\n" + move.to_s() + "\n");}
+                if (verbose == 1){logerr(move.to_s() + "\n");}
                 play(move.to_s(), tp);
                 //logerr(gtp_print(args).response);
 

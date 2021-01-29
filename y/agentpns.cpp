@@ -42,8 +42,10 @@ void AgentPNS::test() {
 void AgentPNS::search(double time, uint64_t maxiters, int verbose){
 	max_nodes_seen = maxiters;
 
-	if(rootboard.outcome() >= 0)
+	if(rootboard.outcome() >= 0){
+                root_outcome = rootboard.outcome();
 		return;
+	}
 
 	Time starttime;
 
@@ -81,6 +83,7 @@ void AgentPNS::search(double time, uint64_t maxiters, int verbose){
 		if(verbose >= 3 && !root.children.empty())
 			logerr("Move stats:\n" + move_stats(vecmove()));
 	}
+	root_outcome = root.to_outcome(~rootboard.to_play());
 }
 
 void AgentPNS::AgentThread::iterate(){

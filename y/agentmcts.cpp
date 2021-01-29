@@ -126,7 +126,6 @@ void AgentMCTS::search(double time, uint64_t max_runs, int verbose){
 			}
 		}
 
-                root_outcome = root.outcome;
 		if(root.outcome != Outcome::UNKNOWN){
 			logerr("Solved as a " + root.outcome.to_s_rel(to_play) + "\n");
 		}
@@ -140,6 +139,7 @@ void AgentMCTS::search(double time, uint64_t max_runs, int verbose){
 			logerr("Move stats:\n" + move_stats(vecmove()));
 	}
 
+	root_outcome = root.outcome;
 	pool.reset();
 	runs = 0;
 
