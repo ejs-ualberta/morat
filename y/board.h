@@ -123,12 +123,11 @@ public:
 			}
 			return;
 	        }
-		// Need to modify history if doing this
-	        // if (to_play_ == Side::P2){
-		// 	to_play_ = Side::P1;
-	        // }else if (to_play_ == Side::P1){
-		// 	to_play_ = Side::P2;
-		// }
+	        if (to_play_ == Side::P2){
+			to_play_ = Side::P1;
+	        }else if (to_play_ == Side::P1){
+			to_play_ = Side::P2;
+		}
 	}
 
 	std::string size() const {

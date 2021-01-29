@@ -342,7 +342,7 @@ GTPResponse GTP::solve_all(vecstr args){
 		agent->search(use_time, time_control.max_sims, verbose);
 		time_control.use(Time() - start);
 
-                if ((tp == Side::P1 && agent->root_outcome == Outcome::P1) || (tp == Side::P2 && agent->root_outcome == Outcome::P2)){
+                if (agent->root_outcome == "loss"){
                         //logerr("Winning move " + move.to_s() + "\n");
                         winning_moves += move.to_s() + " ";
 		}

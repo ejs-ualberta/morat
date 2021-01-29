@@ -38,7 +38,7 @@ public:
 
 	virtual void gen_sgf(SGFPrinter<Move> & sgf, int limit) const = 0;
 	virtual void load_sgf(SGFParser<Move> & sgf) = 0;
-        Outcome root_outcome = Outcome::UNKNOWN;
+        std::string root_outcome = "";
 
 protected:
 	volatile bool timeout;

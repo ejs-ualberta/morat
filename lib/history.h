@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "outcome.h"
 #include "move.h"
 
 
@@ -11,6 +12,7 @@ namespace Morat {
 template<class Board>
 class History {
 	std::vector<Move> hist;
+        std::vector<Side> players;
 	Board board;
 
 public:
@@ -41,6 +43,7 @@ public:
 
 	void clear() {
 		hist.clear();
+		players.clear();
 		board.clear();
 	}
 
@@ -53,9 +56,13 @@ public:
 			return false;
 
 		hist.pop_back();
-
+                players.pop_back();
 		board.clear();
-		for(auto m : hist) {
+		for(int i = 0; i < len(); ++i) {
+                        if (players[i] != board.to_play()){
+		                toggle_to_play();
+		        }
+                        auto m = hist[i];
 			board.move(m);
 		}
 		return true;
@@ -63,6 +70,7 @@ public:
 
 	bool move(const Move & m) {
 		if(board.valid_move(m)){
+                        players.push_back(board.to_play());
 			board.move(m);
 			hist.push_back(m);
 			return true;

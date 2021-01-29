@@ -49,7 +49,7 @@ void AgentMCTS::search(double time, uint64_t max_runs, int verbose){
 	Side to_play = rootboard.to_play();
 
 	if(rootboard.outcome() >= Outcome::DRAW || (time <= 0 && max_runs == 0)){
-                root_outcome = rootboard.outcome();
+                root_outcome = rootboard.outcome().to_s_rel(to_play);
 		return;
 	}
 
@@ -139,7 +139,7 @@ void AgentMCTS::search(double time, uint64_t max_runs, int verbose){
 			logerr("Move stats:\n" + move_stats(vecmove()));
 	}
 
-	root_outcome = root.outcome;
+        root_outcome = root.outcome.to_s_rel(to_play);
 	pool.reset();
 	runs = 0;
 
