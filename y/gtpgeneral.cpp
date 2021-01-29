@@ -1,4 +1,4 @@
-
+#include <bits/stdc++.h> 
 #include <fstream>
 
 #include "../lib/sgf.h"
@@ -33,7 +33,21 @@ GTPResponse GTP::gtp_print(vecstr args){
 	for(auto arg : args)
 		if (!board.move(arg))
 			break;
-	return GTPResponse(true, "\n" + board.to_s(colorboard));
+
+	std::string str = board.to_s(colorboard);
+	std::stringstream s(str);
+	std::vector<std::string> lines;
+	std::string str_i;
+	while(std::getline(s, str_i, '\n')){
+	  lines.push_back(str_i);
+	}
+	std::reverse(lines.begin(), lines.end());
+	std::string result = "\n";
+	for (auto line: lines){
+	  result += line + "\n";
+	}
+	
+	return GTPResponse(true, result);
 }
 
 GTPResponse GTP::gtp_boardsize(vecstr args){
