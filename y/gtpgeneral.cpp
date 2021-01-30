@@ -46,6 +46,8 @@ GTPResponse GTP::gtp_print(vecstr args){
 	for (auto line: lines){
 	  result += line + "\n";
 	}
+
+	result += "\033[0m";
 	
 	return GTPResponse(true, result);
 }
